@@ -7,6 +7,8 @@ var bodyParser = require("body-parser");
 
 var index = require("./routes/index");
 var books = require("./routes/books");
+var mongoose = require('mongoose');
+var Books = require('./models/books');
 
 var app = express();
 
@@ -22,9 +24,32 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+
 app.use("/", index);
 app.use("/books", books);
 
+mongoose.connect('mongodb://localhost/mongoose-db-lab', function (err) {
+  // var testingBook = new Books ({
+  //   title: 'HARRY POTTER AND THE GOBLET',
+  //   author: 'JK ROWLING',
+  //   summary: 'the fourth book',
+  //   ratings: [
+  //       {
+  //           detail: 'might be the very best yet',
+  //           numberOfStars: 4,
+  //       }
+  //   ],
+  // });
+  // testingBook.save(function(err) {
+  //       if (err) throw err;
+  //       console.log('Book successfully saved.');
+  //   });
+  
+ if (err) throw err;
+console.log('Successfully connected');
+ });
+
+ 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error("Not Found");
@@ -43,4 +68,4 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+module.exports = app
