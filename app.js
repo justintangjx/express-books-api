@@ -1,3 +1,9 @@
+
+if(process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
+const isProduction = process.env.NODE_ENV === "production";
+
 var express = require("express");
 var path = require("path");
 var favicon = require("serve-favicon");
@@ -10,7 +16,10 @@ var books = require("./routes/books");
 var mongoose = require('mongoose');
 var Books = require('./models/books');
 
-var app = express();
+const app = express();
+
+const dburl = process.env.MONGODB_URI;
+
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -28,7 +37,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", index);
 app.use("/books", books);
 
-mongoose.connect('mongodb://localhost/mongoose-db-lab', function (err) {
+mongoose.connect(dburl, function (err) {
   // var testingBook = new Books ({
   //   title: 'HARRY POTTER AND THE GOBLET',
   //   author: 'JK ROWLING',
