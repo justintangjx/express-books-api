@@ -2,19 +2,9 @@ var mongoose = require('mongoose');
 
 var booksSchema = mongoose.Schema({
     
-    title: {
-        title: String,
-        required: false
-    },
+    title: String,
     author: String,
-    summary: String,
    
-    ratings: [
-        {
-            detail: String,
-            numberOfStars: Number,
-        }
-    ],
     created: { 
         type: Date,
         default: Date.now

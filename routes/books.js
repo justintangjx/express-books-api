@@ -22,9 +22,10 @@ router.get("/:id", async function(req, res) {
   }
 });
 
-router.post("/", async function(req, res) {
+router.post("/:title", async function(req, res) {
   let newEntry = new Books({
-    title: req.body.title
+    title: req.body.title,
+    author: req.body.author
   });
   try {
     await newEntry.save();
